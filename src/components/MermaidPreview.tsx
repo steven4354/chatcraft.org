@@ -35,14 +35,13 @@ const MermaidPreview = ({ children }: MermaidPreviewProps) => {
     }
 
     const mermaidDiagramId = `mermaid-diagram-${unique()}`;
-    mermaid
-      .render(mermaidDiagramId, code, diagramDiv)
-      .then(({ svg, bindFunctions }) => {
+    (mermaid.render(mermaidDiagramId, code, diagramDiv as any) as any)
+      .then(({ svg, bindFunctions }: any) => {
         setValue(svg);
         diagramDiv.innerHTML = svg;
         bindFunctions?.(diagramDiv);
       })
-      .catch((err) => {
+      .catch((err: any) => {
         // When the diagram fails, use the error vs. diagram for copying (to debug)
         setValue(err);
         console.warn(`Error rendering mermaid diagram ${mermaidDiagramId}`, err);
